@@ -8,7 +8,7 @@ uploaded_file = st.file_uploader("📁 Unggah file Excel laporan berita (.xlsx)"
 
 if uploaded_file:
     df = pd.read_excel(uploaded_file, sheet_name='Sheet1')
-    df.columns = ['NO', 'TANGGAL', 'JUDUL BERITA', 'PETUGAS', 'FOTO/SUMBER', 'BIDANG', 'JENIS BERITA', 'VIEWERS']
+    df.columns = ['NO', 'TANGGAL', 'JUDUL BERITA', 'PETUGAS PELIPUT', 'FOTO/SUMBER', 'BIDANG', 'JENIS BERITA', 'VIEWERS']
     df = df[df['TANGGAL'].notna()]
     df.reset_index(drop=True, inplace=True)
 
@@ -37,10 +37,11 @@ if uploaded_file:
     df[['Skor Viewers', 'Skor Bidang', 'Skor Sumber', 'Total Skor', 'Kategori']] = df.apply(nilai_berita, axis=1)
 
     st.success("✅ Berita berhasil dinilai.")
-    st.dataframe(df[['TANGGAL', 'JUDUL BERITA', 'VIEWERS', 'BIDANG', 'FOTO/SUMBER', 'Kategori']])
+    st.dataframe(df[['TANGGAL', 'JUDUL BERITA', 'PETUGAS PELIPUT', 'VIEWERS', 'BIDANG', 'FOTO/SUMBER', 'Kategori']])
 
     csv = df.to_csv(index=False).encode('utf-8')
     st.download_button("📥 Unduh CSV", csv, "hasil_penilaian_berita.csv", "text/csv")
 
 else:
     st.info("Silakan unggah file Excel terlebih dahulu.")
+
